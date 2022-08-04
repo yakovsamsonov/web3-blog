@@ -29,8 +29,8 @@ describe("Blog", function () {
     const blog = await Blog.deploy("My blog")
     await blog.deployed()
 
-    expect(await blog.name().to.equal("My blog"))
+    expect(await blog.name()).to.equal("My blog")
     await blog.updateName('My new blog')
-    expect(await blog.name().to.equal("My new blog"))
+    expect(await blog.name()).to.equal("My new blog")
   })
 });

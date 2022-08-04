@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 contract Blog {
     string public name;
-    string public owner;
+    address public owner;
 
     using Counters for Counters.Counter;
     Counters.Counter private _postIds;

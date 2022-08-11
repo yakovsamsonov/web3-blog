@@ -8,9 +8,8 @@ import { AccountContext } from "../context.js"
 import { ownerAddress } from "../config"
 import 'easymde/dist/easymde.min.css'
 import "../styles/globals.css"
-import { walletconnect } from "web3modal/dist/providers/connectors"
 
-function App({Component, pageProps}) {
+function MyApp({Component, pageProps}) {
   const [account, setAccount] = useState(null)
 
   async function getWeb3Modal() {
@@ -25,6 +24,7 @@ function App({Component, pageProps}) {
         },
       },
     })
+    return web3Modal
   }
 
   async function connect() {

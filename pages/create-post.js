@@ -12,12 +12,11 @@ import {
 import Blog from '../artifacts/contracts/Blog.sol/Blog.json'
 
 function createIPFSClient() {
-    const projectId = process.env.INFURA_PROJECT_ID
-    const projectSecret = process.env.INFURA_PROJECT_KEY
+    const projectId = process.env.NEXT_PUBLIC_PROJECT_ID
+    const projectSecret = process.env.NEXT_PUBLIC_PROJECT_KEY
 
     const auth = 'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64');
-
-    const client = await ipfsClient.create({
+    const client = create({
        host: 'ipfs.infura.io',
        port: 5001,
        protocol: 'https',
@@ -25,8 +24,7 @@ function createIPFSClient() {
        headers: {
          authorization: auth
        }
-     })
-
+    })
     return client
 }
 
@@ -37,6 +35,8 @@ const SimpleMDE = dynamic(
 
 const initialState = { title: '', content: ''}
 
+const client = createIPFSClient()
+
 function CreatePost() {
     const [post, setPost] = useState(initialState)
     const [image, setImage] = useState(null)
@@ -45,8 +45,6 @@ function CreatePost() {
     const fileRef = useRef(null)
     const { title, content } = post
     const router = useRouter()
-
-    const client = createIPFSClient()
 
     useEffect(() => {
         setTimeout(() => {
@@ -74,7 +72,7 @@ function CreatePost() {
             const contract = new ethers.Contract(contractAddress, Blog.abi, signer)
             console.log('contract: ', contract)
             try {
-                const val = await contract.CreatePost(post.title, hash)
+                const val = await contract.createPost(post.title, hash)
                 /* optional - wait for transaction to be confirmed before rerouting */
                 /* await provider.waitForTransaction(val.hash)*/
                 console.log('val: ', val)
@@ -191,3 +189,15 @@ const button = css`
 `
 
 export default CreatePost
+
+/*
+This is my blog post
+
+## Some h2 content
+    
+This is some code
+    
+    ```
+hello() {}
+    ```
+*/

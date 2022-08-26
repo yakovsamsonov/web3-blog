@@ -6,7 +6,7 @@ import { ethers } from 'ethers'
 import { create } from 'ipfs-http-client'
 
 import {
-    contractAddress, ownerAddress
+    contractAddress
   } from "../config"
   
 import Blog from '../artifacts/contracts/Blog.sol/Blog.json'
